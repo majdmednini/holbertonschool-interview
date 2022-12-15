@@ -9,6 +9,6 @@
 
 listint_t *insert_node(listint_t **head, int number)
 {
-  listint_t *current = NULL;
+	listint_t *current = NULL;
 	listint_t *new_node = NULL;
 }
