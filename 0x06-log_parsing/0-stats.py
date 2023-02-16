@@ -1,51 +1,44 @@
 #!/usr/bin/python3
-""" Module Docstring """
+"""0. Log parsing"""
 import sys
 
 
-def print_st(dic, size):
-    """ Log printer """
-    print("File size: {:d}".format(size))
-    for i in sorted(dic.keys()):
-        if dic[i] != 0:
-            print("{}: {:d}".format(i, dic[i]))
+def printer(total, status):
+    print("File size: {}".format(total))
+    for key, value in sorted(status.items()):
+        if value != 0:
+            print("{}: {}".format(key, value))
 
 
-sts = {
-    "200": 0,
-    "301": 0,
-    "400": 0,
-    "401": 0,
-    "403": 0,
-    "404": 0,
-    "405": 0,
-    "500": 0
-    }
-
-count = 0
-size = 0
-
-try:
-    for j in sys.stdin:
-        if count != 0 and count % 10 == 0:
-            print_st(sts, size)
-
-        sthist = j.split()
-        count += 1
-
-        try:
-            size += int(stlist[-1])
-        except:
-            pass
-
-        try:
-            if stlist[-2] in sts:
-                sts[stlist[-2]] += 1
-        except:
-            pass
-    print_st(sts, size)
+def computes_metrics():
+    try:
+        total = 0
+        i = 0
+        status = {
+            '200': 0,
+            '301': 0,
+            '400': 0,
+            '401': 0,
+            '403': 0,
+            '404': 0,
+            '405': 0,
+            '500': 0,
+        }
+        for line in sys.stdin:
+            line = line.replace("-", " ")
+            line = line.split()
+            if (len(line) == 10):
+                if line[-2] in status.keys():
+                    status[line[-2]] += 1
+                total += int(line[-1])
+                i += 1
+            if i == 10 or i == 0:
+                printer(total, status)
+                i = 0
+        printer(total, status)
+    except KeyboardInterrupt as Error:
+        printer(total, status)
 
 
-except KeyboardInterrupt:
-    print_st(sts, size)
-    raise
+if __name__ == '__main__':
+    computes_metrics()
