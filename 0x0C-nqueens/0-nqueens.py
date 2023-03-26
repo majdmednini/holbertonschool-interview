@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-""" 0. N queens """
+"""
+The N queens puzzle is the challenge of placing N non-attacking queens
+on an N×N chessboard. Write a program that solves the N queens problem.
+"""
 from sys import argv
 
 
 def validate() -> None:
-    """checking num"""
+    """Check beforehand if the number can be evaluated"""
     if (len(argv) != 2):
         print('Usage: nqueens N') or exit(1)
     try:
@@ -17,7 +20,7 @@ def validate() -> None:
 
 
 def nqueens(j: int, num: int) -> None:
-    """algo"""
+    """N Queens Algorithm"""
     table = [num * [0] for i in range(num)]
     col = []
     diag_right = []
@@ -28,7 +31,7 @@ def nqueens(j: int, num: int) -> None:
 
 def create_table(j: int, num: int, bol: int, table: int, diag_right: list,
                  diag_left: list, col: list, dd: list) -> None:
-    """testing"""
+    """Create a test of chess tables with queens in different positions"""
     if bol == 0:
         i = 0
     else:
@@ -74,7 +77,7 @@ def create_table(j: int, num: int, bol: int, table: int, diag_right: list,
 
 def check(num: int, i: int, j: int,
           right: list, left: list, col: list) -> bool:
-    """validating"""
+    """Validate if the Queen is not attcked"""
     # Diagonal right
     if (i - j) in right:
         return (False)
